@@ -23,6 +23,7 @@ public class Mascota {
         this.raza = raza;
         this.adoptada = adoptada;
         this.perdida = perdida;
+        descripcion="Es un cachorro lindo y jugueton, todo el dia pasa activo y no ladra mucho.";
     }
 
     public Mascota(String nombre, boolean adoptada, boolean perdida) {

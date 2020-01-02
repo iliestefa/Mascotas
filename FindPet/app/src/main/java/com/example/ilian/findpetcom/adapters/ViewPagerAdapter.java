@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+//AQUI ESTAN CONTENIDOS LOS TABS-------------------------------------------------
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
     private final List<Fragment> listFragment=new ArrayList<>();
