@@ -5,7 +5,7 @@
     android:layout_gravity="center">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="#232323"
@@ -27,17 +27,27 @@
             android:id="@+id/dialog_tipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
             android:text="Tipo:"
             android:textColor="@android:color/darker_gray"
             android:textSize="12sp" />
+
+
+        <TextView
+            android:id="@+id/dialog_sexedad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="Edad:"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp" />
+
         <TextView
             android:id="@+id/dialog_descripcion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:layout_marginBottom="10dp"
             android:text="descripciondescripciondescripciondescripciondescripciondescripcion:"
             android:textColor="@android:color/white"
             android:textSize="15sp" />

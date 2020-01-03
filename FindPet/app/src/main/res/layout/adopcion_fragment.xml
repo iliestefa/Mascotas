@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundfragment">
-    <android.support.v7.widget.RecyclerView
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/adopcion_recyclerview"
-        android:padding="16dp"
-        >
+        android:orientation="vertical">
 
-    </android.support.v7.widget.RecyclerView>
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-</android.support.constraint.ConstraintLayout>
+        </SearchView>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/adopcion_recyclerview"
+            android:layout_width="391dp"
+            android:layout_height="516dp"
+            android:padding="16dp"
+            android:visibility="visible">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

@@ -8,8 +8,10 @@ public class Mascota {
     private String animal;
     private String raza;
     private int edad;
+    private String sexo;
     private boolean adoptada;
     private boolean perdida;
+
 
 
     public Mascota(String nombre) {
@@ -30,6 +32,14 @@ public class Mascota {
         this.nombre = nombre;
         this.adoptada = adoptada;
         this.perdida = perdida;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
     }
 
     public String getNombre() {
