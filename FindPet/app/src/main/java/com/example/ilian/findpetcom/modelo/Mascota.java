@@ -1,5 +1,7 @@
 package com.example.ilian.findpetcom.modelo;
 
+import com.example.ilian.findpetcom.Datos;
+
 public class Mascota {
 
     private String nombre;
@@ -11,6 +13,7 @@ public class Mascota {
     private String sexo;
     private boolean adoptada;
     private boolean perdida;
+    private Usuario dueno;
 
 
 
@@ -18,13 +21,16 @@ public class Mascota {
         this.nombre = nombre;
     }
 
-    public Mascota(String nombre, int foto, String animal, String raza, boolean adoptada, boolean perdida) {
+    public Mascota(String nombre, int foto, String animal, String raza, boolean adoptada, boolean perdida,String sexo,int edad) {
         this.nombre = nombre;
         this.foto = foto;
         this.animal = animal;
         this.raza = raza;
         this.adoptada = adoptada;
         this.perdida = perdida;
+        this.sexo=sexo;
+        this.edad=edad;
+        dueno=Datos.user;
         descripcion="Es un cachorro lindo y jugueton, todo el dia pasa activo y no ladra mucho.";
     }
 
@@ -32,6 +38,14 @@ public class Mascota {
         this.nombre = nombre;
         this.adoptada = adoptada;
         this.perdida = perdida;
+    }
+
+    public Usuario getDueno() {
+        return dueno;
+    }
+
+    public void setDueno(Usuario dueno) {
+        this.dueno = dueno;
     }
 
     public String getSexo() {

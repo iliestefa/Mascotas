@@ -20,6 +20,7 @@ public class Inicio extends AppCompatActivity {
     //CREA LOS FRAGMENTS Y LOS PRESENTA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Datos.cargarUsers();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
 

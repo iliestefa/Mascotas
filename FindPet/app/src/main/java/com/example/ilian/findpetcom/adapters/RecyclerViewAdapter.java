@@ -30,6 +30,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     Context mContex;
     List<Mascota> mData;
     Dialog myDialog;
+    DialogMio myDialo;
     int ind;
 
 
@@ -54,50 +55,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
         //SE CREA EL DIALOG -----------------
-        myDialog=new Dialog(mContex);
-        myDialog.setContentView(R.layout.dialog_adoptar);
-        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialo=new DialogMio(mContex);
 
         //SE MUESTRA EL DIALOG AL HACER CLICK
         vHolder.item_mascota.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                TextView dialog_nombre=(TextView) myDialog.findViewById(R.id.dialog_name);
-                TextView dialog_desc=(TextView) myDialog.findViewById(R.id.dialog_descripcion);
-                TextView dialog_tipo=(TextView) myDialog.findViewById(R.id.dialog_tipo);
-                TextView dialog_sexedad=(TextView) myDialog.findViewById(R.id.dialog_sexedad);
-                ImageView dialog_ima=(ImageView) myDialog.findViewById(R.id.dialog_ima);
-                if (ind==2) {
-                    Button whatsapp = (Button) myDialog.findViewById(R.id.dialog_btn_adoptar);
-                    whatsapp.setText("Dar Info");
-                }else if (ind==3) dialogMias(mData.get(vHolder.getAdapterPosition()));
-                String sexedad=mData.get(vHolder.getAdapterPosition()).getSexo()+" de "+mData.get(vHolder.getAdapterPosition()).getEdad()+" años";
-                dialog_sexedad.setText(sexedad);
-                dialog_nombre.setText(mData.get(vHolder.getAdapterPosition()).getNombre());
-                dialog_desc.setText(mData.get(vHolder.getAdapterPosition()).getDescripcion());
-                String tipo=mData.get(vHolder.getAdapterPosition()).getAnimal()+"-"+mData.get(vHolder.getAdapterPosition()).getRaza();
-                dialog_tipo.setText(tipo);
-                dialog_ima.setImageResource(mData.get(vHolder.getAdapterPosition()).getFoto());
-
-                myDialog.show();
+                myDialo.llenar(mData.get(vHolder.getAdapterPosition()));
+                if (ind==1 || ind==2) myDialo.accionesNormales(mData.get(vHolder.getAdapterPosition()));
+                if (ind==2)  myDialo.getWhatsapp().setText("Dar Info");
+                else if (ind==3) myDialo.dialogMias(mData.get(vHolder.getAdapterPosition()));
+                myDialo.getMyDialog().show();
             }
-
-
-
-            public void dialogMias(Mascota m){
-                Button perdido = (Button) myDialog.findViewById(R.id.dialog_btn_info);
-                Button adopcion = (Button) myDialog.findViewById(R.id.dialog_btn_adoptar);
-                if(m.isPerdida()) perdido.setText("Encontrada");
-                else perdido.setText("Reportar Perdida");
-                if (m.isAdoptada()) adopcion.setText("Asignar Dueño");
-                else adopcion.setText("Poner en Adopción");
-
-
-            }
-        }
-        );
-
+        });
        return vHolder;
     }
 
@@ -117,7 +88,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return mData.size();
     }
 
-    //SE CREA EL FORMATO DE LA VISTA
+
+
+
+
+
+
+
+
+
+    //SE CREA EL FORMATO DE LA VISTA del recycler
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         private TextView tv_name;
@@ -125,10 +105,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView tv_tipo;
         private ImageView img;
         private LinearLayout item_mascota;
-
-
-
-
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
