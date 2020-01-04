@@ -11,8 +11,8 @@ public class Datos {
 
 
     public static void cargarUsers(){
-        user =new Usuario("0956482632","Iliana Bolaños","ili","0998771032","34 y letamendi");
-        Usuario u2=new Usuario("0988888888","Emily Fajardo","emi","0998771032","34 y letamendi");
+        user =new Usuario("0956482632","Iliana Bolaños","ili","593998771032","34 y letamendi");
+        Usuario u2=new Usuario("0988888888","Emily Fajardo","emi","593998771032","34 y letamendi");
         user.setMias(cargarMascotasEnAdopcion());
 
 

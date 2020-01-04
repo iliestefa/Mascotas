@@ -1,15 +1,19 @@
 package com.example.ilian.findpetcom.adapters;
 
 import android.app.Dialog;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.telephony.PhoneNumberUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ilian.findpetcom.Datos;
+import com.example.ilian.findpetcom.Metodos;
 import com.example.ilian.findpetcom.R;
 import com.example.ilian.findpetcom.modelo.Mascota;
 import com.example.ilian.findpetcom.modelo.Usuario;
@@ -67,6 +71,7 @@ public class DialogMio {
             @Override
             public void onClick(View v) {
 
+                Metodos.abrirWhatsapp(mascota.getDueno().getCelular(),myDialog);
             }
         });
 
@@ -99,11 +104,11 @@ public class DialogMio {
         });
     }
 
-    public void llenarUser(Usuario user){
+    public void llenarUser(final Usuario user){
         DialogMio d=new DialogMio(myDialog.getContext());
         d.dialog_ima.setImageResource(R.drawable.user);
         d.dialog_nombre.setText(user.getNombre());
-        d.dialog_desc.setText("                            "+user.getCelular()+"                            ");
+        d.dialog_desc.setText("                        +"+user.getCelular()+"                        ");
         d.dialog_tipo.setText(user.getDireccion());
         d.dialog_sexedad.setHeight(0);
 
@@ -113,6 +118,15 @@ public class DialogMio {
         d.info.setMaxHeight(0);
         d.info.setHeight(0);
         d.myDialog.show();
+
+        d.whatsapp.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Metodos.abrirWhatsapp(user.getCelular(),myDialog);
+            }
+        });
+
 
     }
 
