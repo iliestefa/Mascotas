@@ -42,8 +42,8 @@ public class Metodos {
         ((FragmentEnAdopcion)Datos.adapter.getListFragment().get(1)).getMyReciclerview().getAdapter().notifyDataSetChanged();
     }
     public static Usuario buscarUsuario(String text) {
-        List<Usuario> lstUsers= Datos.cargarUsers();
-        for (Usuario u : lstUsers){
+
+        for (Usuario u : Datos.users){
             if (u.getCedula().equals(text)) return u;
         }
         return null;

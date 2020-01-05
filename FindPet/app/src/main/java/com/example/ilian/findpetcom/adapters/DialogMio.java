@@ -159,14 +159,19 @@ public class DialogMio {
                     toast1.show();
 
                 }else {
+                    Toast toast1 =  Toast.makeText(myDialog.getContext(), ""+Datos.datosString(), Toast.LENGTH_SHORT);
+                    toast1.show();
 
                     m.getDueno().getMias().remove(m);
                     m.setDueno(usernew);
                     usernew.getMias().add(m);
                     m.setAdoptada(false);
+
                     Datos.masAdopcion.remove(m);
                     Metodos.actualizarTodo(myDialog.getContext());
                     dialogCed.cancel();
+                    toast1 =  Toast.makeText(myDialog.getContext(), ""+Datos.datosString(), Toast.LENGTH_SHORT);
+                    toast1.show();
 
                 }
                 Metodos.actualizarTodo(myDialog.getContext());
