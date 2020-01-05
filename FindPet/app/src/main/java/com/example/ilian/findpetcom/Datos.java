@@ -39,11 +39,12 @@ public class Datos {
 
 
     public static List<Usuario>   cargarUsers(){
-        user =new Usuario("0956482632","Iliana Bolaños","ili","593998771032","34 y letamendi");
+        Usuario user1 =new Usuario("0956482632","Iliana Bolaños","ili","593998771032","34 y letamendi");
         Usuario u2=new Usuario("0988888888","Emily Fajardo","emi","593998771032","34 y letamendi");
         users=new ArrayList<>();
-        users.add(user);
+        users.add(user1);
         users.add(u2);
+
         return users;
     }
 

@@ -23,10 +23,7 @@ public class Inicio extends AppCompatActivity {
     //CREA LOS FRAGMENTS Y LOS PRESENTA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Datos.cargarUsers();
-        Datos.cargarMascotas();
-        Datos.cargarMascotasEnAdopcion();
-        Datos.cargarMascotasPerdidas();
+
         //Datos.cargarMascotasMias();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
@@ -72,14 +69,14 @@ public class Inicio extends AppCompatActivity {
             startActivity(addMasc);
 
         }else if(id==R.id.mnuPerfil){
-            DialogMio dialogo =new DialogMio(getApplicationContext());
+            DialogMio dialogo =new DialogMio(this);
             dialogo.llenarUser(Datos.user);
-            dialogo.getWhatsapp().setVisibility(View.INVISIBLE);
-            dialogo.getMyDialog().show();
+
 
         }else if(id==R.id.mnuCerrar){
             Intent log=new Intent(Inicio.this,Login.class);
             startActivity(log);
+            finish();
         }
 
         return super.onOptionsItemSelected(item);
