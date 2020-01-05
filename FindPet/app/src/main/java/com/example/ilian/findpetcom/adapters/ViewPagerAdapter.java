@@ -40,4 +40,14 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         lstTitulos.add(title);
 
     }
+
+    public List<Fragment> getListFragment() {
+        return listFragment;
+    }
+
+    public List<String> getLstTitulos() {
+        return lstTitulos;
+    }
+
+
 }

@@ -1,16 +1,16 @@
 package com.example.ilian.findpetcom.adapters;
 
 import android.app.Dialog;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.telephony.PhoneNumberUtils;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ilian.findpetcom.Datos;
 import com.example.ilian.findpetcom.Metodos;
@@ -45,6 +45,8 @@ public class DialogMio {
 
 
     public void llenar(Mascota m) {
+        whatsapp.setEnabled(true);
+        info.setEnabled(true);
 
         String sexedad = m.getSexo() + " de " + m.getEdad() + " años";
         dialog_sexedad.setText(sexedad);
@@ -53,8 +55,6 @@ public class DialogMio {
         String tipo = m.getAnimal() + "-" + m.getRaza();
         dialog_tipo.setText(tipo);
         dialog_ima.setImageResource(m.getFoto());
-
-
     }
 
     public void accionesNormales(final Mascota mascota){
@@ -77,31 +77,113 @@ public class DialogMio {
 
 
     }
+
     //Dialog que sale cuando esta en la seccion de mis mascotas
-    public void dialogMias(Mascota m) {
-        final Mascota m2 = m;
-        if (m.isPerdida()) info.setText("Encontrada");
-        else info.setText("Reportar Perdida");
+    public void dialogMias(final Mascota m2) {
+
+
+        if (m2.isPerdida()){
+            info.setText("Encontrada");
+            whatsapp.setEnabled(false);
+        }else {
+            info.setText("Reportar Perdida");
+            whatsapp.setEnabled(true);
+        }
 
         info.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (info.getText().equals("Encontrada")) m2.setPerdida(false);
-                else m2.setPerdida(true);
+
+                if (info.getText().equals("Encontrada")){
+                    m2.setPerdida(false);
+                    Datos.masPerdidas.remove(m2);
+                    Metodos.actualizarTodo(myDialog.getContext());
+                }else {
+                    m2.setPerdida(true);
+                    Datos.masPerdidas.add(m2);
+                    Metodos.actualizarTodo(myDialog.getContext());
+                }
+                myDialog.cancel();
             }
         });
-        if (m.isAdoptada()) whatsapp.setText("Asignar Dueño");
-        else whatsapp.setText("Poner en Adopción");
+
+        if (m2.isAdoptada()){
+            whatsapp.setText("Asignar Dueño");
+            info.setEnabled(false);
+
+        }else {
+            whatsapp.setText("Poner en Adopción");
+            info.setEnabled(true);
+
+        }
+
 
         whatsapp.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                if (whatsapp.getText().equals("Asignar Dueño")) m2.setAdoptada(false);
-                else m2.setAdoptada(true);
+                if (whatsapp.getText().equals("Asignar Dueño")) {
+                    Dialog dialogCed = new Dialog(myDialog.getContext());
+                    dialogCed.setContentView(R.layout.dialognuevoduenio);
+                    accionesAsignarDuenio(dialogCed,m2);
+                    dialogCed.show();
+                    myDialog.cancel();
+
+                }
+                else{
+                    m2.setAdoptada(true);
+                    Datos.masAdopcion.add(m2);
+                    Metodos.actualizarTodo(myDialog.getContext());
+                    myDialog.cancel();
+                    Metodos.actualizarTodo(myDialog.getContext());
+                }
+                Metodos.actualizarTodo(myDialog.getContext());
+                Toast toast1 =  Toast.makeText(myDialog.getContext(), ""+Datos.datosString(), Toast.LENGTH_SHORT);
+                toast1.show();
             }
         });
+    }
+
+    private void accionesAsignarDuenio(final Dialog dialogCed, final Mascota m) {
+        Button aceptar = (Button) dialogCed.findViewById(R.id.dialog_btn_aceptar);
+        Button cancelar = (Button) dialogCed.findViewById(R.id.dialog_btn_cancelar);
+        final EditText ced=(EditText) dialogCed.findViewById(R.id.cedula);
+
+        aceptar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Usuario usernew=Metodos.buscarUsuario(ced.getText().toString());
+                if(usernew==null){
+                    Toast toast1 =  Toast.makeText(myDialog.getContext(), "Usuario no valido", Toast.LENGTH_SHORT);
+                    toast1.show();
+
+                }else {
+
+                    m.getDueno().getMias().remove(m);
+                    m.setDueno(usernew);
+                    usernew.getMias().add(m);
+                    m.setAdoptada(false);
+                    Datos.masAdopcion.remove(m);
+                    Metodos.actualizarTodo(myDialog.getContext());
+                    dialogCed.cancel();
+
+                }
+                Metodos.actualizarTodo(myDialog.getContext());
+
+            }
+        });
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Datos.masAdopcion.remove(m);
+                Metodos.actualizarTodo(myDialog.getContext());
+                m.setAdoptada(false);
+                dialogCed.cancel();
+            }
+        });
+
+
     }
 
     public void llenarUser(final Usuario user){

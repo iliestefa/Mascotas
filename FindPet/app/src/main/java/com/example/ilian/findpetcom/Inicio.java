@@ -21,6 +21,10 @@ public class Inicio extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Datos.cargarUsers();
+        Datos.cargarMascotas();
+        Datos.cargarMascotasEnAdopcion();
+        Datos.cargarMascotasPerdidas();
+        //Datos.cargarMascotasMias();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicio);
 
@@ -38,11 +42,14 @@ public class Inicio extends AppCompatActivity {
         adapter.addFragment(f2,"Perdidas");
         adapter.addFragment(f3,"Mis Macotas");
 
+        Datos.adapter=adapter;
+
         viewPager.setAdapter(adapter);
         tabs.setupWithViewPager(viewPager);
 
         ActionBar actionBar=getSupportActionBar();
         actionBar.setElevation(0);
+
 
 
 

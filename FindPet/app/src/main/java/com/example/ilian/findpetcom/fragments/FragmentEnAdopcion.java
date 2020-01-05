@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ilian.findpetcom.Datos;
+import com.example.ilian.findpetcom.Metodos;
 import com.example.ilian.findpetcom.R;
 import com.example.ilian.findpetcom.adapters.RecyclerViewAdapter;
 import com.example.ilian.findpetcom.modelo.Mascota;
@@ -35,13 +36,13 @@ public class FragmentEnAdopcion extends Fragment {
         super.onCreate(savedInstanceState);
         switch (i){
             case 1:
-                lstMascotas=Datos.cargarMascotasEnAdopcion();
+                lstMascotas=Datos.masAdopcion;
                 break;
             case 2:
-                lstMascotas=Datos.cargarMascotasPerdidas();
+                lstMascotas=Datos.masPerdidas;
                 break;
             case 3:
-                lstMascotas=Datos.cargarMascotasMias();
+                lstMascotas=Datos.user.getMias();
                 break;
             default:
                 lstMascotas=Datos.error();
@@ -68,7 +69,33 @@ public class FragmentEnAdopcion extends Fragment {
         RecyclerViewAdapter recyclerAdapter= new RecyclerViewAdapter(getContext(),lstMascotas,i);
         myReciclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myReciclerview.setAdapter(recyclerAdapter);
+
         return v;
 
+    }
+
+
+    public View getV() {
+        return v;
+    }
+
+    public void setV(View v) {
+        this.v = v;
+    }
+
+    public RecyclerView getMyReciclerview() {
+        return myReciclerview;
+    }
+
+    public void setMyReciclerview(RecyclerView myReciclerview) {
+        this.myReciclerview = myReciclerview;
+    }
+
+    public List<Mascota> getLstMascotas() {
+        return lstMascotas;
+    }
+
+    public void setLstMascotas(List<Mascota> lstMascotas) {
+        this.lstMascotas = lstMascotas;
     }
 }

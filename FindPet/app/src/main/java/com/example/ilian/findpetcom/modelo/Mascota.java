@@ -120,4 +120,8 @@ public class Mascota {
         this.perdida = perdida;
     }
 
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

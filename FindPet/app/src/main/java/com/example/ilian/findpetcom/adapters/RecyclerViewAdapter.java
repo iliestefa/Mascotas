@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ilian.findpetcom.Datos;
+import com.example.ilian.findpetcom.Metodos;
 import com.example.ilian.findpetcom.R;
 import com.example.ilian.findpetcom.modelo.Mascota;
 
@@ -119,4 +121,43 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
+    public Context getmContex() {
+        return mContex;
+    }
+
+    public void setmContex(Context mContex) {
+        this.mContex = mContex;
+    }
+
+    public List<Mascota> getmData() {
+        return mData;
+    }
+
+    public void setmData(List<Mascota> mData) {
+        this.mData = mData;
+    }
+
+    public Dialog getMyDialog() {
+        return myDialog;
+    }
+
+    public void setMyDialog(Dialog myDialog) {
+        this.myDialog = myDialog;
+    }
+
+    public DialogMio getMyDialo() {
+        return myDialo;
+    }
+
+    public void setMyDialo(DialogMio myDialo) {
+        this.myDialo = myDialo;
+    }
+
+    public int getInd() {
+        return ind;
+    }
+
+    public void setInd(int ind) {
+        this.ind = ind;
+    }
 }
