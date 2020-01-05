@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.example.ilian.findpetcom.Datos;
 import com.example.ilian.findpetcom.Metodos;
@@ -69,6 +70,30 @@ public class FragmentEnAdopcion extends Fragment {
         RecyclerViewAdapter recyclerAdapter= new RecyclerViewAdapter(getContext(),lstMascotas,i);
         myReciclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
         myReciclerview.setAdapter(recyclerAdapter);
+        SearchView buscador=(SearchView)v.findViewById(R.id.buscador);
+        buscador.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                switch (i){
+                    case 1:
+                        Metodos.filtrarAdopcion(getContext() ,newText);
+                        break;
+                    case 2:
+                        Metodos.filtrarPerdidas(getContext(),newText);
+                        break;
+                    case 3:
+                        Metodos.filtrarMias(getContext(),newText);
+                        break;
+                }
+                return false;
+            }
+        });
 
         return v;
 
