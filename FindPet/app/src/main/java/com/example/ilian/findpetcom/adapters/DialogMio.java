@@ -195,7 +195,7 @@ public class DialogMio {
         DialogMio d=new DialogMio(myDialog.getContext());
         d.dialog_ima.setImageResource(R.drawable.user);
         d.dialog_nombre.setText(user.getNombre());
-        d.dialog_desc.setText("                        +"+user.getCelular()+"                        ");
+        d.dialog_desc.setText("+"+ user.getCelular());
         d.dialog_tipo.setText(user.getDireccion());
         d.dialog_sexedad.setHeight(0);
 

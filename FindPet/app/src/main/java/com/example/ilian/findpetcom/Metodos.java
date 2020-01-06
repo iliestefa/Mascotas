@@ -62,6 +62,7 @@ public class Metodos {
     }
 
     public static void actualizarTodo(Context c){
+
         actualizarPerdidas(c,Datos.masPerdidas);
         actualizarMias(c,Datos.user.getMias());
         actualizarAdoptadas(c, Datos.masAdopcion);

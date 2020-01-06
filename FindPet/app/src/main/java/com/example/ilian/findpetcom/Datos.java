@@ -3,6 +3,7 @@ package com.example.ilian.findpetcom;
 import android.content.Context;
 
 import com.example.ilian.findpetcom.adapters.ViewPagerAdapter;
+import com.example.ilian.findpetcom.modelo.Animal;
 import com.example.ilian.findpetcom.modelo.Mascota;
 import com.example.ilian.findpetcom.modelo.Usuario;
 
@@ -17,6 +18,8 @@ public class Datos {
     public static List<Mascota> masPerdidas;
     public static List<Mascota> masAdopcion;
     public static Context contex;
+    public static List<Animal> animales ;
+
 
 
 
@@ -76,5 +79,21 @@ public class Datos {
     public static String datosString() {
         return "Mias: "+Datos.user.getMias()+
         "\nperdidas: "+Datos.masPerdidas+"\nadopcion: "+Datos.masAdopcion;
+    }
+
+    public static String[] cargarDatosMasc(){
+        animales=new ArrayList<>();
+        animales.add(new Animal("Perro",new String[]{"Pug","Bulldog","Beagle","Chihuahua","Dóberman"}));
+        animales.add(new Animal("Gato",new String[]{"Persa","Turco","Ruso","Siames"}));
+        animales.add(new Animal("Ave",new String[]{"guacamayos","loros","pericos","cotorras"}));
+        animales.add(new Animal("Pez",new String[]{"Perro","Gato","Ave","Pez"}));
+        return new String[]{"Perro","Gato","Ave","Pez"};
+    }
+
+    public static String[] buscarRazas(Animal a){
+        for (Animal ani:animales){
+            if (ani.getAnimal().equals(a)) return ani.getRazas();
+        }
+        return null;
     }
 }

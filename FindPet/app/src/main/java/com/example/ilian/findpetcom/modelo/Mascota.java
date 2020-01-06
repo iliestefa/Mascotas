@@ -15,7 +15,18 @@ public class Mascota {
     private boolean perdida;
     private Usuario dueno;
 
-
+    public Mascota(String nombre, String descripcion, int foto, String animal, String raza, int edad, String sexo, Usuario dueno) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.foto = foto;
+        this.animal = animal;
+        this.raza = raza;
+        this.edad = edad;
+        this.sexo = sexo;
+        this.adoptada = false;
+        this.perdida = false;
+        this.dueno = dueno;
+    }
 
     public Mascota(String nombre) {
         this.nombre = nombre;

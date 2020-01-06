@@ -5,7 +5,7 @@
     android:layout_gravity="center">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:background="#232323"
@@ -48,7 +48,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginBottom="10dp"
-            android:text="                            0990262639                              "
+            android:text="0990262639"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
 
