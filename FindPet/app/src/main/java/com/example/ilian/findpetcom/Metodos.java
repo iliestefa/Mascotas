@@ -62,10 +62,10 @@ public class Metodos {
     }
 
     public static void actualizarTodo(Context c){
+        RecyclerViewAdapter recyclerAdapter= new RecyclerViewAdapter(c,Inicio.frag.getLstMascotas(),Inicio.frag.getI());
+        Inicio.frag.getMyReciclerview().setAdapter(recyclerAdapter);
+        Inicio.frag.getMyReciclerview().getAdapter().notifyDataSetChanged();
 
-        actualizarPerdidas(c,Datos.masPerdidas);
-        actualizarMias(c,Datos.user.getMias());
-        actualizarAdoptadas(c, Datos.masAdopcion);
     }
 
 
