@@ -1,6 +1,10 @@
 package com.example.ilian.findpetcom;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 
 import android.widget.AdapterView;
@@ -10,9 +14,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.ilian.findpetcom.Estructuras.RequestRegistrarMascota;
+import com.example.ilian.findpetcom.RestApi.MetodosRest;
 import com.example.ilian.findpetcom.modelo.Mascota;
+import com.example.ilian.findpetcom.modelo.RazaMascota;
+import com.example.ilian.findpetcom.modelo.TipoMascota;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NuevaMascotavista {
     EditText nombre;
@@ -24,9 +33,18 @@ public class NuevaMascotavista {
     Button Aceptar;
     Button Cancelar;
     NuevaMascota c;
+    Integer idUsuario;
+    private SharedPreferences sharedPreferences;
+    private List<TipoMascota> tiposObj;
+    private List<String> tiposStr=  new ArrayList();
+    private List<RazaMascota> razasObj;
+    private List<String> razasStr=  new ArrayList();;
+    private ProgressDialog barProgressDialog = null;
 
     public NuevaMascotavista(NuevaMascota c) {
         this.c=c;
+        sharedPreferences = c.getSharedPreferences(VariablesGlobales.PREFERENCES, Context.MODE_PRIVATE);
+        idUsuario = sharedPreferences.getInt("id_usuario", -1);
         this.nombre = (EditText) c.findViewById(R.id.txtNombre);
         this.tipo = (AutoCompleteTextView) c.findViewById(R.id.txtTipo);
         this.raza = (AutoCompleteTextView) c.findViewById(R.id.txtRaza);
@@ -35,42 +53,62 @@ public class NuevaMascotavista {
         this.descripcion = (EditText) c.findViewById(R.id.txtDescripcion);
         Aceptar = (Button) c.findViewById(R.id.btnAceptar);
         Cancelar = (Button) c.findViewById(R.id.btnCancelar);
-        datos();
+        barProgressDialog = new ProgressDialog(c);
+        Aceptar.setEnabled(false);
+        new ExecuteTaskListas().execute();
         acciones();
-    }
-
-    private void datos() {
-        ArrayAdapter<String> tipoList=new ArrayAdapter<String>(c,R.layout.support_simple_spinner_dropdown_item,Datos.cargarDatosMasc());
-        tipo.setAdapter(tipoList);
-        ArrayAdapter<String> tipoList1=new ArrayAdapter<String>(c,R.layout.support_simple_spinner_dropdown_item,new String[]{"Macho","Hembra"});
-        sexo.setAdapter(tipoList1);
 
     }
+
+
 
     private void acciones() {
+        final RequestRegistrarMascota request = new RequestRegistrarMascota();
 
-        tipo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ArrayAdapter<String> tipoList1=new ArrayAdapter<String>(c,R.layout.support_simple_spinner_dropdown_item,Datos.animales.get(position).getRazas());
-                raza.setAdapter(tipoList1);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
 
                 Aceptar.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Mascota m = new Mascota(nombre.getText().toString(), descripcion.getText().toString(), R.drawable.i, tipo.getText().toString(), raza.getText().toString(), Integer.valueOf(edad.getText().toString()), sexo.getText().toString(), Datos.user);
-                        Datos.user.getMias().add(m);
-                        c.finish();
-                        Metodos.actualizarTodo(c);
-                        //  Toast toast1 =  Toast.makeText(c, "Mascota creada correctamente", Toast.LENGTH_SHORT);
-                        // toast1.show();
+
+
+                        request.descripcion = descripcion.getText().toString().trim();
+                        if(request.descripcion.equals("")|| request.descripcion==null){
+                            Toast.makeText(c, "Debe ingresar una descripcion valida", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        request.dueno = idUsuario;
+                        request.edad = edad.getText().toString().trim();
+                        if(request.edad.equals("")|| request.edad==null){
+                            Toast.makeText(c, "Debe ingresar una edad valida", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        request.estado = 2;
+                        request.genero = (sexo.getText().toString().equals("Macho")?"M":"h");
+                        if(request.genero==null||request.genero.equals("")){
+                            Toast.makeText(c, "Debe Seleccionar un genero valido", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        request.raza = razasObj.get(razasStr.indexOf(raza.getText().toString().trim())).id_raza;
+                        if(request.raza==0||request.raza==null){
+                            Toast.makeText(c, "Debe Seleccionar una Raza valida", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        request.tipo = tiposObj.get(tiposStr.indexOf(tipo.getText().toString().trim())).id_tipo_mascota;
+                        if(request.tipo==0||request.tipo==null){
+                            Toast.makeText(c, "Debe Seleccionar una Tipo valido", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        request.nombre = nombre.getText().toString().trim();
+                        if(request.nombre.equals("")||request.nombre==null){
+                            Toast.makeText(c, "Debe Ingresar un Nombre valido", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+
+                        new ExecuteTaskRegistrarMascota().execute(request);
+
 
                     }
                 });
@@ -147,4 +185,86 @@ public class NuevaMascotavista {
     public void setCancelar(Button cancelar) {
         Cancelar = cancelar;
     }
+
+
+
+    class ExecuteTaskListas extends AsyncTask<Void, Integer, Boolean>{
+
+        @Override
+        protected void onPreExecute(){
+            Toast.makeText(c, "Espere un momento mientras cargamos los datos necesarios", Toast.LENGTH_LONG).show();
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... params){
+            tiposObj = MetodosRest.getAllTipos();
+            razasObj = MetodosRest.getAllRazas();
+
+            return tiposObj!=null && razasObj!=null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result){
+            if(result){
+                Metodos.generarListasParalelas(tiposObj,tiposStr,razasObj,razasStr);
+                ArrayAdapter<String> tipoList=new ArrayAdapter<String>(c,R.layout.support_simple_spinner_dropdown_item,tiposStr);
+                tipo.setAdapter(tipoList);
+                ArrayAdapter<String> sexoList=new ArrayAdapter<String>(c,R.layout.support_simple_spinner_dropdown_item,new String[]{"Macho","Hembra"});
+                sexo.setAdapter(sexoList);
+                ArrayAdapter<String> razaList=new ArrayAdapter(c,R.layout.support_simple_spinner_dropdown_item,razasStr);
+                raza.setAdapter(razaList);
+                getAceptar().setEnabled(true);
+                Toast.makeText(c, "Datos Cargados", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(c, "Error al cargar datos, vuelva a ingresar a la opcion", Toast.LENGTH_LONG).show();
+            }
+
+        }
+    }
+
+
+    class ExecuteTaskRegistrarMascota extends AsyncTask<RequestRegistrarMascota, Integer, Boolean>{
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            barProgressDialog.setTitle("Registrando Nueva Mascota");
+            barProgressDialog.setMessage("Por favor espere...");
+            barProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            barProgressDialog.setCancelable(false);
+            barProgressDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(RequestRegistrarMascota... params){
+            return MetodosRest.RegistrarMascotas(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result){
+            barProgressDialog.dismiss();
+            if(result){
+                descripcion.setText("");
+                edad.setText("");
+                nombre.setText("");
+                sexo.setText("");
+                tipo.setText("");
+                raza.setText("");
+                Toast.makeText(c, "Mascota Registrada", Toast.LENGTH_LONG).show();
+
+
+            }
+            else{
+                Toast.makeText(c, "Error al registrar Mascota", Toast.LENGTH_LONG).show();
+
+            }
+        }
+
+
+
+    }
+
+
+
 }

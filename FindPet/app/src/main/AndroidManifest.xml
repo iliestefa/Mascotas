@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission-sdk-23 android:name="android.permission.INTERNET" />
+    <uses-permission-sdk-23 android:name="android.permission.ACCESS_NETWORK_STATE" />
+
 
     <application
         android:allowBackup="true"
@@ -15,12 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Login" >
+
+        </activity>
+        <activity android:name=".Inicio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Inicio"></activity>
         <activity android:name=".NuevaMascota"></activity>
     </application>
 

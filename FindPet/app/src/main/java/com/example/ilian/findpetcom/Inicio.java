@@ -1,6 +1,9 @@
 package com.example.ilian.findpetcom;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,6 +15,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,20 +26,31 @@ import com.example.ilian.findpetcom.fragments.FragmentEnAdopcion;
 
 public class Inicio extends AppCompatActivity {
     public static FragmentEnAdopcion frag = null;
-
+    private SharedPreferences sharedPreferences;
+    private ProgressDialog barProgressDialog = null;
     private TabLayout tabs;
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
     DrawerLayout lay;
     ActionBarDrawerToggle ntoggle;
-
+    Integer idUsuario;
     //CREA LOS FRAGMENTS Y LOS PRESENTA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         //Datos.cargarMascotasMias();
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_inicio);
+
+        sharedPreferences = getSharedPreferences(VariablesGlobales.PREFERENCES, Context.MODE_PRIVATE);
+        idUsuario = sharedPreferences.getInt("id_usuario", -1);
+        if (idUsuario == -1) {
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
         lay = (DrawerLayout) findViewById(R.id.lay);
         ntoggle = new ActionBarDrawerToggle(this, lay, R.string.open, R.string.close);
         lay.addDrawerListener(ntoggle);
@@ -101,6 +116,7 @@ public class Inicio extends AppCompatActivity {
             case R.id.mnuMias:
                 frag = new FragmentEnAdopcion();
                 frag.setI(3);
+                frag.setUser(idUsuario);
                 fm = getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.flconten, frag).commit();
                 menuItem.setChecked(true);
@@ -112,9 +128,16 @@ public class Inicio extends AppCompatActivity {
                 break;
             case R.id.mnuPerfil:
                 DialogMio dialogo = new DialogMio(this);
-                dialogo.llenarUser(Datos.user);
+                dialogo.llenarPerfil(this.sharedPreferences);
                 break;
             case R.id.mnuCerrar:
+
+                final SharedPreferences sharedpreferences = getSharedPreferences(VariablesGlobales.PREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+
+
                 Intent log = new Intent(Inicio.this, Login.class);
                 startActivity(log);
                 finish();

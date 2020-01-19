@@ -1,134 +1,206 @@
 package com.example.ilian.findpetcom.modelo;
 
 import com.example.ilian.findpetcom.Datos;
+import com.example.ilian.findpetcom.R;
 
 public class Mascota {
 
-    private String nombre;
+    private Integer foto = R.drawable.a;
+    private Integer id_mascota;
+    private String  nombre;
+    private String  genero;
     private String descripcion;
-    private int foto;
-    private String animal;
-    private String raza;
-    private int edad;
-    private String sexo;
-    private boolean adoptada;
-    private boolean perdida;
-    private Usuario dueno;
+    private String edad;
+    private Integer estado;
+    private Integer dueno;
+    private String  raza;
+    private String  tipo;
+    private Integer id_tipo_mascota;
+    private Integer id_raza;
+    private Integer id_usuario;
+    private String cedula;
+    private String primer_nombre;
+    private String segundo_nombre;
+    private String primer_apellido;
+    private String segundo_apellido;
+    private String correo;
+    private String telefono;
+    private String direccion;
 
-    public Mascota(String nombre, String descripcion, int foto, String animal, String raza, int edad, String sexo, Usuario dueno) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.foto = foto;
-        this.animal = animal;
-        this.raza = raza;
-        this.edad = edad;
-        this.sexo = sexo;
-        this.adoptada = false;
-        this.perdida = false;
-        this.dueno = dueno;
-    }
+
 
     public Mascota(String nombre) {
         this.nombre = nombre;
     }
 
-    public Mascota(String nombre, int foto, String animal, String raza, boolean adoptada, boolean perdida,String sexo,int edad) {
-        this.nombre = nombre;
-        this.foto = foto;
-        this.animal = animal;
-        this.raza = raza;
-        this.adoptada = adoptada;
-        this.perdida = perdida;
-        this.sexo=sexo;
-        this.edad=edad;
-        dueno=Datos.user;
-        descripcion="Es un cachorro lindo y jugueton, todo el dia pasa activo y no ladra mucho.";
-    }
 
-    public Mascota(String nombre, boolean adoptada, boolean perdida) {
-        this.nombre = nombre;
-        this.adoptada = adoptada;
-        this.perdida = perdida;
-    }
 
-    public Usuario getDueno() {
-        return dueno;
-    }
-
-    public void setDueno(Usuario dueno) {
-        this.dueno = dueno;
-    }
-
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public String getNombre() {
-        return nombre;
+    public void setId_mascota(Integer id_mascota) {
+        this.id_mascota = id_mascota;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
 
-    public int getFoto() {
+    public Integer getFoto() {
         return foto;
     }
 
-    public void setFoto(int foto) {
+    public void setFoto(Integer foto) {
         this.foto = foto;
     }
 
-    public String getAnimal() {
-        return animal;
+    public void setEdad(String edad) {
+        this.edad = edad;
     }
 
-    public void setAnimal(String animal) {
-        this.animal = animal;
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 
-    public String getRaza() {
-        return raza;
+    public void setDueno(Integer dueno) {
+        this.dueno = dueno;
     }
 
     public void setRaza(String raza) {
         this.raza = raza;
     }
 
-    public int getEdad() {
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setId_tipo_mascota(Integer id_tipo_mascota) {
+        this.id_tipo_mascota = id_tipo_mascota;
+    }
+
+    public void setId_raza(Integer id_raza) {
+        this.id_raza = id_raza;
+    }
+
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setPrimer_nombre(String primer_nombre) {
+        this.primer_nombre = primer_nombre;
+    }
+
+    public void setSegundo_nombre(String segundo_nombre) {
+        this.segundo_nombre = segundo_nombre;
+    }
+
+    public void setPrimer_apellido(String primer_apellido) {
+        this.primer_apellido = primer_apellido;
+    }
+
+    public void setSegundo_apellido(String segundo_apellido) {
+        this.segundo_apellido = segundo_apellido;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public Integer getId_mascota() {
+        return id_mascota;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getGenero() {
+        return genero;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getEdad() {
         return edad;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public Integer getEstado() {
+        return estado;
     }
 
-    public boolean isAdoptada() {
-        return adoptada;
+    public Integer getDueno() {
+        return dueno;
     }
 
-    public void setAdoptada(boolean adoptada) {
-        this.adoptada = adoptada;
+    public String getRaza() {
+        return raza;
     }
 
-    public boolean isPerdida() {
-        return perdida;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setPerdida(boolean perdida) {
-        this.perdida = perdida;
+    public Integer getId_tipo_mascota() {
+        return id_tipo_mascota;
+    }
+
+    public Integer getId_raza() {
+        return id_raza;
+    }
+
+    public Integer getId_usuario() {
+        return id_usuario;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public String getPrimer_nombre() {
+        return primer_nombre;
+    }
+
+    public String getSegundo_nombre() {
+        return segundo_nombre;
+    }
+
+    public String getPrimer_apellido() {
+        return primer_apellido;
+    }
+
+    public String getSegundo_apellido() {
+        return segundo_apellido;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
     }
 
     @Override

@@ -5,6 +5,16 @@ import java.util.List;
 
 public class Usuario {
 
+    private Integer id_usuario;
+    private String primer_nombre;
+    private String segundo_nombre;
+    private String primer_apellido;
+    private String segundo_apellido;
+    private String usuario;
+    private String contrasena;
+    private String correo;
+    private String telefono;
+
     private String cedula;
     private String nombre;
     private String pass;
@@ -26,6 +36,83 @@ public class Usuario {
     public void addMascota(Mascota m){
         mias.add(m);
 
+    }
+
+    public Usuario() {
+    }
+
+    public Integer getId_usuario() {
+        return id_usuario;
+    }
+
+    public String getPrimer_nombre() {
+        return primer_nombre;
+    }
+
+    public String getSegundo_nombre() {
+        return segundo_nombre;
+    }
+
+    public String getPrimer_apellido() {
+        return primer_apellido;
+    }
+
+    public String getSegundo_apellido() {
+        return segundo_apellido;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+
+
+    public void setId_usuario(Integer id_usuario) {
+        this.id_usuario = id_usuario;
+    }
+
+    public void setPrimer_nombre(String primer_nombre) {
+        this.primer_nombre = primer_nombre;
+    }
+
+    public void setSegundo_nombre(String segundo_nombre) {
+        this.segundo_nombre = segundo_nombre;
+    }
+
+    public void setPrimer_apellido(String primer_apellido) {
+        this.primer_apellido = primer_apellido;
+    }
+
+    public void setSegundo_apellido(String segundo_apellido) {
+        this.segundo_apellido = segundo_apellido;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public List<Mascota> getMias() {

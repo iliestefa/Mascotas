@@ -1,9 +1,15 @@
 package com.example.ilian.findpetcom.adapters;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.View;
 import android.widget.Adapter;
 import android.widget.Button;
@@ -13,14 +19,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ilian.findpetcom.Datos;
+import com.example.ilian.findpetcom.Estructuras.ResponseRealizaAdopcion;
 import com.example.ilian.findpetcom.Metodos;
 import com.example.ilian.findpetcom.R;
+import com.example.ilian.findpetcom.RestApi.MetodosRest;
 import com.example.ilian.findpetcom.modelo.Mascota;
 import com.example.ilian.findpetcom.modelo.Usuario;
 
+import java.util.List;
+
 public class DialogMio {
     Dialog myDialog;
-
+    private ProgressDialog barProgressDialog = null;
     TextView dialog_nombre;
     TextView dialog_desc;
     TextView dialog_tipo;
@@ -28,10 +38,17 @@ public class DialogMio {
     ImageView dialog_ima;
     Button whatsapp;
     Button info;
+    Context mContex;
+    private Integer myUser;
+    private RecyclerViewAdapter recycler;
+    private AlertDialog.Builder builder;
 
 
     public DialogMio(Context mContex) {
+        this.mContex = mContex;
         myDialog = new Dialog(mContex);
+        builder = new AlertDialog.Builder(mContex);
+        barProgressDialog = new ProgressDialog(mContex);
         myDialog.setContentView(R.layout.dialog_adoptar);
         whatsapp = (Button) myDialog.findViewById(R.id.dialog_btn_adoptar);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -48,13 +65,13 @@ public class DialogMio {
         whatsapp.setEnabled(true);
         info.setEnabled(true);
 
-        String sexedad = m.getSexo() + " de " + m.getEdad() + " años";
+        String sexedad = m.getGenero() + " de " + m.getEdad();
         dialog_sexedad.setText(sexedad);
         dialog_nombre.setText(m.getNombre());
         dialog_desc.setText(m.getDescripcion());
-        String tipo = m.getAnimal() + "-" + m.getRaza();
+        String tipo = m.getTipo() + "-" + m.getRaza();
         dialog_tipo.setText(tipo);
-        dialog_ima.setImageResource(m.getFoto());
+        dialog_ima.setImageResource(R.drawable.a);
     }
 
     public void accionesNormales(final Mascota mascota){
@@ -63,7 +80,9 @@ public class DialogMio {
 
             @Override
             public void onClick(View v) {
-                llenarUser(mascota.getDueno());
+
+
+                llenarUser(mascota);
             }
         });
         whatsapp.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +90,7 @@ public class DialogMio {
             @Override
             public void onClick(View v) {
 
-                Metodos.abrirWhatsapp(mascota.getDueno().getCelular(),myDialog);
+                Metodos.abrirWhatsapp(mascota.getTelefono(),myDialog);
             }
         });
 
@@ -82,7 +101,7 @@ public class DialogMio {
     public void dialogMias(final Mascota m2) {
 
 
-        if (m2.isPerdida()){
+        if (m2.getEstado()==0){
             info.setText("Encontrada");
             whatsapp.setEnabled(false);
         }else {
@@ -94,21 +113,33 @@ public class DialogMio {
 
             @Override
             public void onClick(View v) {
-
-                if (info.getText().equals("Encontrada")){
-                    m2.setPerdida(false);
-                    Datos.masPerdidas.remove(m2);
-                    Metodos.actualizarTodo(myDialog.getContext());
-                }else {
-                    m2.setPerdida(true);
-                    Datos.masPerdidas.add(m2);
-                    Metodos.actualizarTodo(myDialog.getContext());
-                }
                 myDialog.cancel();
+
+                builder.setTitle("Confirmacion");
+                builder.setMessage("Desea Registrar la Mascota como "+(info.getText().equals("Encontrada")?"Encontrada":"Perdida")+"?");
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new ExecuteTaskReportar(info.getText().equals("Encontrada")?3:1, m2.getId_mascota()).execute();
+                        dialog.dismiss();
+
+                    }
+                });
+
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+
             }
         });
 
-        if (m2.isAdoptada()){
+        if (m2.getEstado()==1){
             whatsapp.setText("Asignar Dueño");
             info.setEnabled(false);
 
@@ -132,15 +163,33 @@ public class DialogMio {
 
                 }
                 else{
-                    m2.setAdoptada(true);
-                    Datos.masAdopcion.add(m2);
-                    Metodos.actualizarTodo(myDialog.getContext());
+
+
                     myDialog.cancel();
-                    Metodos.actualizarTodo(myDialog.getContext());
+
+                    builder.setTitle("Confirmacion");
+                    builder.setMessage("Desea Poner en Adopción esta Mascota?");
+                    builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            new ExecuteTaskReportar(2, m2.getId_mascota()).execute();
+                            dialog.dismiss();
+
+                        }
+                    });
+
+                    builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                        }
+                    });
+                    builder.setCancelable(false);
+                    builder.show();
+
                 }
-                Metodos.actualizarTodo(myDialog.getContext());
-                Toast toast1 =  Toast.makeText(myDialog.getContext(), ""+Datos.datosString(), Toast.LENGTH_SHORT);
-                toast1.show();
+
             }
         });
     }
@@ -153,37 +202,17 @@ public class DialogMio {
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Usuario usernew=Metodos.buscarUsuario(ced.getText().toString());
-                if(usernew==null){
-                    Toast toast1 =  Toast.makeText(myDialog.getContext(), "Usuario no valido", Toast.LENGTH_SHORT);
-                    toast1.show();
-
-                }else {
-                    Toast toast1 =  Toast.makeText(myDialog.getContext(), ""+Datos.datosString(), Toast.LENGTH_SHORT);
-                    toast1.show();
-
-                    m.getDueno().getMias().remove(m);
-                    m.setDueno(usernew);
-                    usernew.getMias().add(m);
-                    m.setAdoptada(false);
-
-                    Datos.masAdopcion.remove(m);
-                    Metodos.actualizarTodo(myDialog.getContext());
-                    dialogCed.cancel();
-                    toast1 =  Toast.makeText(myDialog.getContext(), ""+Datos.datosString(), Toast.LENGTH_SHORT);
-                    toast1.show();
-
+                if(ced.getText().toString().trim().equals("")){
+                    Toast.makeText(mContex, "Debe Ingresar una cedula valida", Toast.LENGTH_LONG).show();
                 }
-                Metodos.actualizarTodo(myDialog.getContext());
-
+                else{
+                    new ExecuteTaskRealizarAdopcion(m.getId_mascota(),ced.getText().toString().trim(),dialogCed).execute();
+                }
             }
         });
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Datos.masAdopcion.remove(m);
-                Metodos.actualizarTodo(myDialog.getContext());
-                m.setAdoptada(false);
                 dialogCed.cancel();
             }
         });
@@ -191,12 +220,14 @@ public class DialogMio {
 
     }
 
-    public void llenarUser(final Usuario user){
+
+
+    public void llenarUser(final Mascota mascota){
         DialogMio d=new DialogMio(myDialog.getContext());
         d.dialog_ima.setImageResource(R.drawable.user);
-        d.dialog_nombre.setText(user.getNombre());
-        d.dialog_desc.setText("+"+ user.getCelular());
-        d.dialog_tipo.setText(user.getDireccion());
+        d.dialog_nombre.setText(mascota.getPrimer_nombre()+" "+mascota.getSegundo_nombre()+" "+mascota.getPrimer_apellido()+" "+mascota.getSegundo_apellido());
+        d.dialog_desc.setText( mascota.getTelefono());
+        d.dialog_tipo.setText(mascota.getDireccion());
         d.dialog_sexedad.setHeight(0);
 
         d.whatsapp.setText("Contactar");
@@ -210,13 +241,46 @@ public class DialogMio {
 
             @Override
             public void onClick(View v) {
-                Metodos.abrirWhatsapp(user.getCelular(),myDialog);
+                Metodos.abrirWhatsapp("+593"+mascota.getTelefono(),myDialog);
             }
         });
 
 
     }
 
+
+    public void llenarPerfil(SharedPreferences sharedPreferences){
+        DialogMio d=new DialogMio(myDialog.getContext());
+        d.dialog_ima.setImageResource(R.drawable.user);
+        String primer_nomb = sharedPreferences.getString("primer_nombre","");
+        String Seg_nomb = sharedPreferences.getString("segundo_nombre","");
+        String primer_ape = sharedPreferences.getString("primer_apellido","");
+        String seg_ape = sharedPreferences.getString("segundo_apellido","");
+        final String tlf = sharedPreferences.getString("telefono","");
+        String dir = sharedPreferences.getString("direccion","");
+
+        d.dialog_nombre.setText(primer_nomb+" "+Seg_nomb+" "+primer_ape+ " "+seg_ape);
+        d.dialog_desc.setText( tlf);
+        d.dialog_tipo.setText(dir);
+        d.dialog_sexedad.setHeight(0);
+
+        d.whatsapp.setText("Contactar");
+        d.info.setText("");
+        d.info.setVisibility(View.INVISIBLE);
+        d.info.setMaxHeight(0);
+        d.info.setHeight(0);
+        d.myDialog.show();
+
+        d.whatsapp.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Metodos.abrirWhatsapp(tlf,myDialog);
+            }
+        });
+
+
+    }
 
     //GETTERS AND SETTERS-----------------------------------------------------------------------------------------------
 
@@ -283,5 +347,161 @@ public class DialogMio {
 
     public void setInfo(Button info) {
         this.info = info;
+    }
+
+    public void setRecycler(RecyclerViewAdapter recycler) {
+        this.recycler = recycler;
+    }
+
+    public RecyclerViewAdapter getRecycler() {
+        return recycler;
+    }
+
+    public void setMyUser(Integer myUser) {
+        this.myUser = myUser;
+    }
+
+    public Integer getMyUser() {
+        return myUser;
+    }
+
+    class ExecuteTaskRealizarAdopcion extends AsyncTask<Void, Integer, Boolean> {
+        private Integer id_mascota;
+        private String user;
+        private ResponseRealizaAdopcion response;
+        private Boolean result = false;
+        private List<Mascota> listMascotas;
+        private String msj;
+        private Dialog dialogCed;
+
+        public ExecuteTaskRealizarAdopcion(Integer id_mascota, String user, Dialog dialogCed){
+            this.id_mascota = id_mascota;
+            this.user = user;
+            this.dialogCed = dialogCed;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            barProgressDialog.setTitle("Registrando Cambio de Dueño");
+            barProgressDialog.setMessage("Por favor espere...");
+            barProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            barProgressDialog.setCancelable(false);
+            barProgressDialog.show();
+        }
+
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+
+            response = MetodosRest.RealizarAdopcion(user,id_mascota);
+            if(response!=null){
+                if(response.confirm){
+                    listMascotas =  MetodosRest.consultarMisMascota(getMyUser(),"");
+
+                    msj = response.log+(listMascotas==null?", pero No se pudo Actualiza la lista de mascotas":"");
+                    return listMascotas!=null;
+                }
+                else{
+                    msj = response.log;
+                    return result;
+                }
+
+            }
+            msj="No se pudo realizar el registro de la adopcion";
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            barProgressDialog.dismiss();
+            dialogCed.cancel();
+            if (result) {
+                recycler.setmData(listMascotas);
+                recycler.notifyDataSetChanged();
+
+            }
+
+            Toast.makeText(mContex, msj, Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+
+
+    class ExecuteTaskReportar extends AsyncTask<Void, Integer, Boolean>{
+        private Integer opcion,id_mascota;
+
+        private Boolean result = false;
+        private List<Mascota> listMascotas;
+        private String msj;
+
+
+        public ExecuteTaskReportar(int opcion, Integer id_mascota){
+            this.opcion = opcion;
+            this.id_mascota = id_mascota;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            String title ="";
+            if(opcion==2){
+               title = "Registrando Mascota en Adopcion" ;
+            }
+            else if(opcion==1){
+                title = "Registrando Mascota Perdida" ;
+            }
+            else{
+                title = "Registrando Mascota como Encontrada" ;
+            }
+            barProgressDialog.setTitle(title);
+            barProgressDialog.setMessage("Por favor espere...");
+            barProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            barProgressDialog.setCancelable(false);
+            barProgressDialog.show();
+
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params){
+            if(opcion==2){
+                result = MetodosRest.RegistrarAdopcion(id_mascota);
+            }
+            else if(opcion==1){
+                result = MetodosRest.ReportarMascotaPerdida(id_mascota);
+            }
+            else{
+                result = MetodosRest.ReportarMascotaEncontrada(id_mascota);
+            }
+            if(result){
+                if(opcion==1){
+                    msj ="La Mascota ha sido Reportada como Perdida";
+                }
+                else if(opcion ==2){
+                    msj="La Mascota ha sido Puesta en Adopcion";
+                }
+                else{
+                    msj= "La Mascota ha sido Reportada como Encontrada";
+                }
+
+                listMascotas =  MetodosRest.consultarMisMascota(getMyUser(),"");
+                return listMascotas!=null;
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result){
+            barProgressDialog.dismiss();
+
+            if(result){
+                recycler.setmData(listMascotas);
+                recycler.notifyDataSetChanged();
+            }
+            Toast.makeText(mContex, msj+(result?"":", pero no se pudo actualizar la lista"), Toast.LENGTH_LONG).show();
+        }
+
+
     }
 }
