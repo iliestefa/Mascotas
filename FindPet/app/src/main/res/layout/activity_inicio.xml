@@ -18,11 +18,12 @@
 </FrameLayout>
 
     <android.support.design.widget.NavigationView
+        app:headerLayout="@layout/header"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/colorAccent"
-        app:itemTextColor="@color/backgroundfragment"
+
+
         android:id="@+id/nv"
         app:menu="@menu/menu"
         ></android.support.design.widget.NavigationView>

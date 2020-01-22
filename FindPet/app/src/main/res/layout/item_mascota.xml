@@ -31,7 +31,7 @@
                 android:layout_width="119dp"
                 android:layout_height="wrap_content"
                 android:text="Nombre:"
-                android:textColor="#ffffff"
+
                 android:textStyle="bold" />
 
             <TextView
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
             android:text="TextView"
-            android:textColor="?android:attr/detailsElementBackground"
+
             android:textSize="10sp" />
 
     </LinearLayout>

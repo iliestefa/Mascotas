@@ -3,20 +3,26 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/mnuAdopcion"
-        android:title="Mascotas en Adopción" />
+        android:title="Mascotas en Adopción"
+        android:icon="@drawable/mias"/>
     <item
         android:id="@+id/mnuPerdidas"
-        android:title="Mascotas Perdidas" />
+        android:title="Mascotas Perdidas"
+        android:icon="@drawable/perdidas"/>
     <item
         android:id="@+id/mnuMias"
-        android:title="Mascotas Mias" />
+        android:title="Mascotas Mias"
+        android:icon="@drawable/mias"/>
     <item
         android:id="@+id/mnuAddPet"
-        android:title="Añadir Mascota" />
+        android:title="Añadir Mascota"
+        android:icon="@drawable/add"/>
     <item
         android:id="@+id/mnuPerfil"
-        android:title="Ver Perfil" />
+        android:title="Ver Perfil"
+        android:icon="@drawable/perfil"/>
     <item
         android:id="@+id/mnuCerrar"
-        android:title="CerrarSesion" />
+        android:title="CerrarSesion"
+        android:icon="@drawable/salir"/>
 </menu>

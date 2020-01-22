@@ -226,7 +226,7 @@ public class DialogMio {
         DialogMio d=new DialogMio(myDialog.getContext());
         d.dialog_ima.setImageResource(R.drawable.user);
         d.dialog_nombre.setText(mascota.getPrimer_nombre()+" "+mascota.getSegundo_nombre()+" "+mascota.getPrimer_apellido()+" "+mascota.getSegundo_apellido());
-        d.dialog_desc.setText( mascota.getTelefono());
+        d.dialog_desc.setText("+"+ mascota.getTelefono());
         d.dialog_tipo.setText(mascota.getDireccion());
         d.dialog_sexedad.setHeight(0);
 
@@ -241,7 +241,7 @@ public class DialogMio {
 
             @Override
             public void onClick(View v) {
-                Metodos.abrirWhatsapp("+593"+mascota.getTelefono(),myDialog);
+                Metodos.abrirWhatsapp(mascota.getTelefono(),myDialog);
             }
         });
 
