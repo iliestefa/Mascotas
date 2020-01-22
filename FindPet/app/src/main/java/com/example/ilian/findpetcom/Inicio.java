@@ -63,6 +63,8 @@ public class Inicio extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.flconten, frag).commit();
 
+        llenarheader();
+
 /*
 
         tabs=(TabLayout)findViewById(R.id.tablayout_id);
@@ -89,6 +91,25 @@ public class Inicio extends AppCompatActivity {
 
 
 */
+
+    }
+
+
+    void llenarheader(){
+        String primer_nomb = sharedPreferences.getString("primer_nombre","");
+        String Seg_nomb = sharedPreferences.getString("segundo_nombre","");
+        String primer_ape = sharedPreferences.getString("primer_apellido","");
+        String seg_ape = sharedPreferences.getString("segundo_apellido","");
+         String tlf = sharedPreferences.getString("telefono","");
+        String dir = sharedPreferences.getString("direccion","");
+        setContentView(R.layout.header);
+        TextView nomb=findViewById(R.id.txtHnombre);
+        TextView dir=findViewById(R.id.txtHdir);
+        TextView tel=findViewById(R.id.txttelefono);
+        nomb.setText(primer_nomb+Seg_nomb+primer_ape+seg_ape);
+        dir.setText(dir);
+        tel.setText("+"+tlf);
+        setContentView(R.layout.activity_inicio);
 
     }
 
