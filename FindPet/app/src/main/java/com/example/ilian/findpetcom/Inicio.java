@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.ilian.findpetcom.adapters.DialogMio;
 import com.example.ilian.findpetcom.adapters.ViewPagerAdapter;
@@ -104,10 +105,10 @@ public class Inicio extends AppCompatActivity {
         String dir = sharedPreferences.getString("direccion","");
         setContentView(R.layout.header);
         TextView nomb=findViewById(R.id.txtHnombre);
-        TextView dir=findViewById(R.id.txtHdir);
+        TextView dire=findViewById(R.id.txtHdir);
         TextView tel=findViewById(R.id.txttelefono);
         nomb.setText(primer_nomb+Seg_nomb+primer_ape+seg_ape);
-        dir.setText(dir);
+        dire.setText(dir);
         tel.setText("+"+tlf);
         setContentView(R.layout.activity_inicio);
 
