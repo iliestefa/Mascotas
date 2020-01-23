@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.example.ilian.findpetcom.adapters.DialogMio;
 import com.example.ilian.findpetcom.adapters.ViewPagerAdapter;
 import com.example.ilian.findpetcom.fragments.FragmentEnAdopcion;
+import com.example.ilian.findpetcom.fragments.header;
 
 public class Inicio extends AppCompatActivity {
     public static FragmentEnAdopcion frag = null;
@@ -52,6 +53,7 @@ public class Inicio extends AppCompatActivity {
             finish();
             return;
         }
+
         lay = (DrawerLayout) findViewById(R.id.lay);
         ntoggle = new ActionBarDrawerToggle(this, lay, R.string.open, R.string.close);
         lay.addDrawerListener(ntoggle);
@@ -59,11 +61,15 @@ public class Inicio extends AppCompatActivity {
         ntoggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupDrawerContent(nv);
+
+
         frag = new FragmentEnAdopcion();
         frag.setI(1);
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.flconten, frag).commit();
-
+        //header header= new header();
+        //header.setSharedPreferences(sharedPreferences);
+        llenarheader(nv);
        // llenarheader();
 
 /*
@@ -96,23 +102,22 @@ public class Inicio extends AppCompatActivity {
     }
 
 
-    void llenarheader(){
+    void llenarheader(NavigationView nv){
+
+        View header=nv.getHeaderView(0);
         String primer_nomb = sharedPreferences.getString("primer_nombre","");
-        String Seg_nomb = sharedPreferences.getString("segundo_nombre","");
+
         String primer_ape = sharedPreferences.getString("primer_apellido","");
-        String seg_ape = sharedPreferences.getString("segundo_apellido","");
+
          String tlf = sharedPreferences.getString("telefono","");
         String dir = sharedPreferences.getString("direccion","");
-        setContentView(R.layout.header);
-        TextView nomb=findViewById(R.id.txtHnombre);
-        TextView dire=findViewById(R.id.txtHdir);
-        TextView tel=findViewById(R.id.txttelefono);
-        nomb.setText(primer_nomb+Seg_nomb+primer_ape+seg_ape);
+        TextView nomb=header.findViewById(R.id.txtHnombre);
+        TextView dire=header.findViewById(R.id.txtHdir);
+        TextView tel=header.findViewById(R.id.txttelefono);
+        nomb.setText(primer_nomb+" "+primer_ape);
         dire.setText(dir);
         tel.setText("+"+tlf);
-        setContentView(R.layout.activity_inicio);
-
-    }
+        }
 
     public void selectItemDrawer(MenuItem menuItem) {
         frag = null;
@@ -176,6 +181,7 @@ public class Inicio extends AppCompatActivity {
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

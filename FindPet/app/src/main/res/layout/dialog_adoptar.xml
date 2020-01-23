@@ -13,11 +13,21 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/txtestado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="PERDIDA"
+
+
+            />
+
+        <TextView
             android:id="@+id/dialog_name"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="50dp"
             android:textAlignment="center"
             android:text="Nombre"
             android:textColor="@android:color/white"
@@ -39,7 +49,7 @@
             android:layout_width="match_parent"
             android:textAlignment="center"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
+            android:layout_marginBottom="10dp"
             android:text="Edad:"
             android:textColor="@android:color/white"
             android:textSize="12sp" />
@@ -51,7 +61,7 @@
             android:textAlignment="center"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:text="0990262639"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
@@ -80,10 +90,7 @@
             android:padding="20dp"
             android:text="Adoptar"
             android:textAlignment="textStart"
-            android:visibility="visible" />
-
-        >
-    </LinearLayout>
+            android:visibility="visible" /></LinearLayout>
 
     <ImageView
         android:id="@+id/dialog_ima"
@@ -93,6 +100,20 @@
         android:layout_centerHorizontal="true"
         android:padding="10dp"
         android:src="@drawable/i" />
+
+    <Button
+        android:id="@+id/dialog_btn_retirar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        android:background="@android:color/white"
+        android:drawableLeft="@drawable/dialog_compare_arrows_black_24dp"
+        android:drawablePadding="20dp"
+        android:padding="20dp"
+        android:text="Retirar de Adopcion"
+
+        android:textAlignment="textStart"
+        android:visibility="visible" />
 
 
 </RelativeLayout>

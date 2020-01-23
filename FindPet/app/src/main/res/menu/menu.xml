@@ -4,7 +4,7 @@
     <item
         android:id="@+id/mnuAdopcion"
         android:title="Mascotas en Adopción"
-        android:icon="@drawable/mias"/>
+        android:icon="@drawable/adpcion"/>
     <item
         android:id="@+id/mnuPerdidas"
         android:title="Mascotas Perdidas"
@@ -13,16 +13,21 @@
         android:id="@+id/mnuMias"
         android:title="Mascotas Mias"
         android:icon="@drawable/mias"/>
-    <item
-        android:id="@+id/mnuAddPet"
-        android:title="Añadir Mascota"
-        android:icon="@drawable/add"/>
-    <item
-        android:id="@+id/mnuPerfil"
-        android:title="Ver Perfil"
-        android:icon="@drawable/perfil"/>
-    <item
-        android:id="@+id/mnuCerrar"
-        android:title="CerrarSesion"
-        android:icon="@drawable/salir"/>
+    <group
+        android:id="@+id/il"
+        android:checkableBehavior="none"
+        android:menuCategory="secondary">
+        <item
+            android:id="@+id/mnuAddPet"
+            android:icon="@drawable/add"
+            android:title="Añadir Mascota" />
+        <item
+            android:id="@+id/mnuPerfil"
+            android:icon="@drawable/perfil"
+            android:title="Ver Perfil" />
+        <item
+            android:id="@+id/mnuCerrar"
+            android:icon="@drawable/salir"
+            android:title="CerrarSesion" />
+    </group>
 </menu>

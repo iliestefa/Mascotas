@@ -4,7 +4,7 @@
 android:orientation="vertical"
     android:layout_height="160dp"
     android:background="@drawable/fondo"
-    android:paddingTop="25dp"
+    android:paddingTop="35dp"
     android:paddingLeft="30dp">
 
     <ImageView
@@ -20,7 +20,7 @@ android:orientation="vertical"
         android:id="@+id/txtHnombre"
         android:textSize="18dp"
         android:paddingTop="5dp"
-        android:textColor=""
+        android:textColor="@android:color/black"
 
 
         ></TextView>
@@ -29,6 +29,7 @@ android:orientation="vertical"
         android:layout_height="wrap_content"
         android:text="Direcciòn"
         android:id="@+id/txtHdir"
+        android:textColor="@android:color/black"
 
 
         ></TextView>
@@ -37,7 +38,7 @@ android:orientation="vertical"
         android:layout_height="wrap_content"
         android:text="Telefono"
         android:id="@+id/txttelefono"
-
+        android:textColor="@android:color/black"
 
         ></TextView>
 

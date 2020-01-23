@@ -43,7 +43,7 @@
                 android:background="@android:color/white"
                 android:drawablePadding="20dp"
                 android:padding="20dp"
-                android:text="Cancelar"
+                android:text="Quitar de Adopción"
                 android:textAlignment="center"
                 android:visibility="visible" />
 
