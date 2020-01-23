@@ -64,7 +64,7 @@ public class Inicio extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.flconten, frag).commit();
 
-        llenarheader();
+       // llenarheader();
 
 /*
 

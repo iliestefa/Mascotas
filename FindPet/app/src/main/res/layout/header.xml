@@ -2,14 +2,14 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
 android:orientation="vertical"
-    android:layout_height="185dp"
+    android:layout_height="160dp"
     android:background="@drawable/fondo"
-    android:paddingTop="30dp"
+    android:paddingTop="25dp"
     android:paddingLeft="30dp">
 
     <ImageView
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:src="@drawable/user">
 
     </ImageView>
@@ -19,7 +19,8 @@ android:orientation="vertical"
         android:text="Nombre"
         android:id="@+id/txtHnombre"
         android:textSize="18dp"
-        android:paddingTop="10dp"
+        android:paddingTop="5dp"
+        android:textColor=""
 
 
         ></TextView>
