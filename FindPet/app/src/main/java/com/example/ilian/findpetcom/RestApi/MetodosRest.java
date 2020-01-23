@@ -282,4 +282,23 @@ public class MetodosRest {
             return null;
         }
     }
+
+    public static Boolean CambiarEstadoMascota(Integer id_mascota, Integer estado){
+        RequestReportar request = new RequestReportar();
+        request.id_mascota = id_mascota;
+        request.estado = estado;
+
+        try {
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(VariablesGlobales.BASE_URL).addConverterFactory(GsonConverterFactory.create()).build();
+
+            RetrofitConn retrofitConn = retrofit.create(RetrofitConn.class);
+            Call<Object> call = retrofitConn.CambiarEstadoMascota(request);
+            Response<Object> res = call.execute();
+            return res.isSuccessful();
+
+        }catch(Exception e){
+            Log.e("login", e.getMessage());
+            return null;
+        }
+    }
 }

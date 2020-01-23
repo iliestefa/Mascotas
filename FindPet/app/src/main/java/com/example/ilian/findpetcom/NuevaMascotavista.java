@@ -19,7 +19,7 @@ import com.example.ilian.findpetcom.RestApi.MetodosRest;
 import com.example.ilian.findpetcom.modelo.Mascota;
 import com.example.ilian.findpetcom.modelo.RazaMascota;
 import com.example.ilian.findpetcom.modelo.TipoMascota;
-
+import com.example.ilian.findpetcom.modelo.TipoMascota;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,6 +86,7 @@ public class NuevaMascotavista {
 
                         request.estado = 2;
                         request.genero = (sexo.getText().toString().equals("Macho")?"M":"h");
+
                         if(request.genero==null||request.genero.equals("")){
                             Toast.makeText(c, "Debe Seleccionar un genero valido", Toast.LENGTH_LONG).show();
                             return;

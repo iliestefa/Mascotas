@@ -217,10 +217,36 @@ public class DialogMio {
                 }
             }
         });
-        cancelar.setOnClickListener(new View.OnClickListener() {
+        cancelar.setOnClickListener(
+                new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 dialogCed.cancel();
+
+                builder.setTitle("Confirmacion");
+                builder.setMessage("Desea quitar de la lista de Adopción esta Mascota?");
+                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        new ExecuteTaskReportar(4, m.getId_mascota()).execute();
+                        dialog.dismiss();
+
+                    }
+                });
+
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+                builder.setCancelable(false);
+                builder.show();
+
+
             }
         });
 
@@ -459,8 +485,10 @@ public class DialogMio {
             else if(opcion==1){
                 title = "Registrando Mascota Perdida" ;
             }
-            else{
+            else if(opcion==3){
                 title = "Registrando Mascota como Encontrada" ;
+            }else{
+                title = "Quitando a la mascota de la lista de Adopciones";
             }
             barProgressDialog.setTitle(title);
             barProgressDialog.setMessage("Por favor espere...");
@@ -478,8 +506,10 @@ public class DialogMio {
             else if(opcion==1){
                 result = MetodosRest.ReportarMascotaPerdida(id_mascota);
             }
-            else{
+            else if(opcion==3){
                 result = MetodosRest.ReportarMascotaEncontrada(id_mascota);
+            }else{
+                result = MetodosRest.CambiarEstadoMascota(id_mascota,2);
             }
             if(result){
                 if(opcion==1){
@@ -488,8 +518,11 @@ public class DialogMio {
                 else if(opcion ==2){
                     msj="La Mascota ha sido Puesta en Adopcion";
                 }
-                else{
+                else if(opcion==3){
                     msj= "La Mascota ha sido Reportada como Encontrada";
+                }
+                else {
+                    msj="La mascota ha sido quitada de la lista de Adopciones";
                 }
 
                 listMascotas =  MetodosRest.consultarMisMascota(getMyUser(),"");

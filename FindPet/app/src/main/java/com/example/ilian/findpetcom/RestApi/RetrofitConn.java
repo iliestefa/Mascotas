@@ -60,4 +60,7 @@ public interface RetrofitConn {
     @PUT("reportarMascotaEncontrada")
     Call<Object> ReportarMascotaEncontrada(@Body RequestReportar request);
 
+    @PUT("cambiarEstadoMascota")
+    Call<Object> CambiarEstadoMascota(@Body RequestReportar request);
+
 }

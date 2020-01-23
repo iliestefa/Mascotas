@@ -2,10 +2,6 @@ package com.example.ilian.findpetcom;
 
 import android.content.Context;
 
-import com.example.ilian.findpetcom.adapters.ViewPagerAdapter;
-import com.example.ilian.findpetcom.modelo.Animal;
-import com.example.ilian.findpetcom.modelo.Mascota;
-import com.example.ilian.findpetcom.modelo.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
