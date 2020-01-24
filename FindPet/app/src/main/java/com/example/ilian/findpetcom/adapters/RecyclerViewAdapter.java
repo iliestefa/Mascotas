@@ -86,8 +86,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         myViewHolder.tv_name.setText(mData.get(i).getNombre());
         myViewHolder.tv_tipo.setText(mData.get(i).getTipo()+"-"+mData.get(i).getRaza());
         myViewHolder.tv_desc.setText(mData.get(i).getDescripcion());
-        myViewHolder.img.setImageResource(R.drawable.a);
-
+        if (ind==3) {
+            if (mData.get(i).getEstado() == 0) {
+                myViewHolder.tv_estado.setText("PERDIDA");
+            } else if (mData.get(i).getEstado() == 1) {
+                myViewHolder.tv_estado.setText("EN ADOPCIÓN");
+            } else
+                myViewHolder.tv_estado.setText("LIBRE");
+            myViewHolder.img.setImageResource(R.drawable.a);
+        }
     }
 
     @Override
@@ -108,6 +115,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         private TextView tv_name;
+        private TextView tv_estado;
         private TextView tv_desc;
         private TextView tv_tipo;
         private ImageView img;
@@ -120,6 +128,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             tv_desc=(TextView) itemView.findViewById(R.id.descripcion);
             tv_tipo=(TextView) itemView.findViewById(R.id.tipo);
             img=(ImageView) itemView.findViewById(R.id.img_mascota);
+            tv_estado=(TextView) itemView.findViewById(R.id.txtestado);
 
 
         }

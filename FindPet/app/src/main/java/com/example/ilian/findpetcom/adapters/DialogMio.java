@@ -33,7 +33,7 @@ public class DialogMio {
     private ProgressDialog barProgressDialog = null;
     TextView dialog_nombre;
     TextView dialog_desc;
-    TextView dialog_estado;
+
     TextView dialog_tipo;
     TextView dialog_sexedad;
     ImageView dialog_ima;
@@ -55,7 +55,7 @@ public class DialogMio {
         whatsapp = (Button) myDialog.findViewById(R.id.dialog_btn_adoptar);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog_nombre = (TextView) myDialog.findViewById(R.id.dialog_name);
-        dialog_estado = (TextView) myDialog.findViewById(R.id.txtestado);
+
         dialog_desc = (TextView) myDialog.findViewById(R.id.dialog_descripcion);
         dialog_tipo = (TextView) myDialog.findViewById(R.id.dialog_tipo);
         dialog_sexedad = (TextView) myDialog.findViewById(R.id.dialog_sexedad);
@@ -68,7 +68,7 @@ public class DialogMio {
     public void llenar(Mascota m) {
         whatsapp.setEnabled(true);
         info.setEnabled(true);
-        dialog_estado.setText("");
+
         String sexedad = m.getGenero() + " de " + m.getEdad();
         dialog_sexedad.setText(sexedad);
         dialog_nombre.setText(m.getNombre());
@@ -107,7 +107,7 @@ public class DialogMio {
 
         if (m2.getEstado()==0){
             info.setText("Encontrada");
-            dialog_estado.setText("PERDIDA");
+
             whatsapp.setEnabled(false);
         }else {
             info.setText("Reportar Perdida");
@@ -145,7 +145,7 @@ public class DialogMio {
         });
 
         if (m2.getEstado()==1){
-            dialog_estado.setText("EN ADOPCIÓN");
+
             whatsapp.setText("Asignar Dueño");
             info.setEnabled(false);
             retirar.setHeight(100);
