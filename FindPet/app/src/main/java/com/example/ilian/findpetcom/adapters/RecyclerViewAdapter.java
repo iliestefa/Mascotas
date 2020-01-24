@@ -86,14 +86,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         myViewHolder.tv_name.setText(mData.get(i).getNombre());
         myViewHolder.tv_tipo.setText(mData.get(i).getTipo()+"-"+mData.get(i).getRaza());
         myViewHolder.tv_desc.setText(mData.get(i).getDescripcion());
+        myViewHolder.img.setImageResource(R.drawable.a);
         if (ind==3) {
             if (mData.get(i).getEstado() == 0) {
                 myViewHolder.tv_estado.setText("PERDIDA");
             } else if (mData.get(i).getEstado() == 1) {
                 myViewHolder.tv_estado.setText("EN ADOPCIÓN");
-            } else
+            } else {
                 myViewHolder.tv_estado.setText("LIBRE");
-            myViewHolder.img.setImageResource(R.drawable.a);
+            }
+
         }
     }
 
