@@ -69,7 +69,7 @@ public class DialogMio {
         whatsapp.setEnabled(true);
         info.setEnabled(true);
 
-        String sexedad = m.getGenero() + " de " + m.getEdad();
+        String sexedad = (m.getGenero()=="M"?"Macho":"Hembra") + " de " + m.getEdad() +" de Edad";
         dialog_sexedad.setText(sexedad);
         dialog_nombre.setText(m.getNombre());
         dialog_desc.setText(m.getDescripcion());
