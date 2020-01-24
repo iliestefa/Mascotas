@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
 android:orientation="vertical"
     android:layout_height="160dp"
-    android:background="@drawable/fondo"
+    android:background="@drawable/fond"
     android:paddingTop="35dp"
-    android:paddingLeft="30dp">
+    android:paddingLeft="25dp">
 
     <ImageView
         android:layout_width="55dp"

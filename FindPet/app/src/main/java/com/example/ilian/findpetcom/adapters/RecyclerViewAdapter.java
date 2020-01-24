@@ -93,8 +93,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 myViewHolder.tv_estado.setText("EN ADOPCIÓN");
             } else
                 myViewHolder.tv_estado.setText("LIBRE");
-            myViewHolder.img.setImageResource(R.drawable.a);
-        }
+
+        }myViewHolder.img.setImageResource(R.drawable.a);
     }
 
     @Override
