@@ -101,7 +101,7 @@ public class Login extends AppCompatActivity {
             if (result) {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("usuario", response.getUsuario());
-                editor.putString("contrasena", response.getContrasena());
+                //editor.putString("contrasena", response.getContrasena());
                 editor.putInt("id_usuario", response.getId_usuario());
                 editor.putString("primer_nombre", response.getPrimer_nombre());
                 editor.putString("segundo_nombre", response.getSegundo_nombre());

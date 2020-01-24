@@ -85,22 +85,26 @@ public class NuevaMascotavista {
                         }
 
                         request.estado = 2;
-                        request.genero = (sexo.getText().toString().equals("Macho")?"M":"h");
-
-                        if(request.genero==null||request.genero.equals("")){
-                            Toast.makeText(c, "Debe Seleccionar un genero valido", Toast.LENGTH_LONG).show();
+                        Log.e("genero",sexo.getText().toString().trim().toLowerCase());
+                        if(!sexo.getText().toString().trim().toLowerCase().equals("macho")&&!sexo.getText().toString().trim().toLowerCase().equals("hembra")){
+                            Toast.makeText(c, "Debe Seleccionar un genero valido: Macho o Hembra", Toast.LENGTH_LONG).show();
                             return;
                         }
-                        request.raza = razasObj.get(razasStr.indexOf(raza.getText().toString().trim())).id_raza;
-                        if(request.raza==0||request.raza==null){
+                        request.genero = (sexo.getText().toString().equals("Macho")?"M":"h");
+                        int idxraza = razasStr.indexOf(raza.getText().toString().trim());
+                        if(idxraza==-1){
                             Toast.makeText(c, "Debe Seleccionar una Raza valida", Toast.LENGTH_LONG).show();
                             return;
                         }
-                        request.tipo = tiposObj.get(tiposStr.indexOf(tipo.getText().toString().trim())).id_tipo_mascota;
-                        if(request.tipo==0||request.tipo==null){
+                        request.raza = razasObj.get(idxraza).id_raza;
+
+                        int idxtipo = tiposStr.indexOf(tipo.getText().toString().trim());
+                        if(idxtipo==-1){
                             Toast.makeText(c, "Debe Seleccionar una Tipo valido", Toast.LENGTH_LONG).show();
                             return;
                         }
+                        request.tipo = tiposObj.get(idxtipo).id_tipo_mascota;
+
 
                         request.nombre = nombre.getText().toString().trim();
                         if(request.nombre.equals("")||request.nombre==null){
