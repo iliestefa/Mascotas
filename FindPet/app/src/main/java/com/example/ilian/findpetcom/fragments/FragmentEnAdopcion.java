@@ -171,8 +171,9 @@ public class FragmentEnAdopcion extends Fragment {
                 lstMascotas = MetodosRest.ConsultarPerdidas(params[0]);
             }
             else if(getI()==3 && getUser()!=-1){
+
                 lstMascotas = MetodosRest.consultarMisMascota(getUser(),params[0]);
-                recyclerAdapter.setUser(getUser());
+
             }
 
             return lstMascotas!=null;
@@ -182,6 +183,7 @@ public class FragmentEnAdopcion extends Fragment {
         protected void onPostExecute(Boolean result) {
             barProgressDialog.dismiss();
             if (result) {
+                    recyclerAdapter.setUser(getUser());
                     recyclerAdapter.setmData(lstMascotas);
                     recyclerAdapter.notifyDataSetChanged();
 

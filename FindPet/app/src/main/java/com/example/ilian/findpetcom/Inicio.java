@@ -65,6 +65,7 @@ public class Inicio extends AppCompatActivity {
 
         frag = new FragmentEnAdopcion();
         frag.setI(1);
+        frag.setUser(idUsuario);
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().replace(R.id.flconten, frag).commit();
         //header header= new header();
@@ -127,6 +128,7 @@ public class Inicio extends AppCompatActivity {
             case R.id.mnuAdopcion:
                 frag = new FragmentEnAdopcion();
                 frag.setI(1);
+                frag.setUser(idUsuario);
                 fm = getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.flconten, frag).commit();
                 menuItem.setChecked(true);
@@ -135,6 +137,7 @@ public class Inicio extends AppCompatActivity {
             case R.id.mnuPerdidas:
                 frag = new FragmentEnAdopcion();
                 frag.setI(2);
+                frag.setUser(idUsuario);
                 fm = getSupportFragmentManager();
                 fm.beginTransaction().replace(R.id.flconten, frag).commit();
                 menuItem.setChecked(true);

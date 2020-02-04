@@ -89,10 +89,16 @@ public class DialogMio {
                 llenarUser(mascota);
             }
         });
+
+        whatsapp.setEnabled(myUser!=mascota.getId_usuario());
+        Log.e("dueno",myUser.toString());
+        Log.e("dueno 2",mascota.getId_usuario().toString());
+        Log.e("enable",String.valueOf(myUser!=mascota.getId_usuario()));
         whatsapp.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+
 
                 Metodos.abrirWhatsapp(mascota.getTelefono(),myDialog);
             }
